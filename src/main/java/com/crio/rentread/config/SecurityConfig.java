@@ -3,6 +3,7 @@ package com.crio.rentread.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -13,7 +14,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.config.Customizer;
 
+import com.crio.rentread.model.Role;
 import com.crio.rentread.service.UserService;
 
 @Configuration
@@ -33,7 +36,9 @@ public class SecurityConfig {
     public AuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider authenticationProvider=new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userService);
-        authenticationProvider.setPasswordEncoder(new BCryptPasswordEncoder());
+        // authenticationProvider.setPasswordEncoder(new BCryptPasswordEncoder());
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
+
         return authenticationProvider;
     }
     @Bean
@@ -46,15 +51,20 @@ public class SecurityConfig {
         httpSecurity.authorizeHttpRequests(config->config
         .requestMatchers("/","/login","/register")
         .permitAll()
+        .requestMatchers(HttpMethod.POST,"/book")
+        .hasAuthority(Role.ADMIN.name())
+        .requestMatchers(HttpMethod.DELETE,"/book/{bookId}")
+        .hasAuthority(Role.ADMIN.name())
         .anyRequest()
         .authenticated()
         );
+        httpSecurity.httpBasic(Customizer.withDefaults());
        return httpSecurity.build();
     }
 
-    // @Bean
-    // public PasswordEncoder passwordEncoder(){
-    //     return new BCryptPasswordEncoder();
-    // }
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
     
 }

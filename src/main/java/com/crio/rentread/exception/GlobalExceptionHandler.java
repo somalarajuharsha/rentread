@@ -13,5 +13,8 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handlerEmailExist(EmailExistException e){
         return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
     }
-    
+    @ExceptionHandler(BookExistException.class)
+    public ResponseEntity<String> handlerBookExist(BookExistException e){
+        return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
+    }
 }
