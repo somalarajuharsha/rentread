@@ -51,9 +51,11 @@ public class SecurityConfig {
         httpSecurity.authorizeHttpRequests(config->config
         .requestMatchers("/","/login","/register")
         .permitAll()
-        .requestMatchers(HttpMethod.POST,"/book")
+        .requestMatchers(HttpMethod.POST,"/api/books")
         .hasAuthority(Role.ADMIN.name())
-        .requestMatchers(HttpMethod.DELETE,"/book/{bookId}")
+        .requestMatchers(HttpMethod.DELETE,"/api/books/{bookId}")
+        .hasAuthority(Role.ADMIN.name())
+        .requestMatchers(HttpMethod.PUT,"/api/books/{bookId}")
         .hasAuthority(Role.ADMIN.name())
         .anyRequest()
         .authenticated()

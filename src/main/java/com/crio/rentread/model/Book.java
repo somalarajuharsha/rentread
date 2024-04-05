@@ -1,6 +1,5 @@
 package com.crio.rentread.model;
 
-import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,4 +24,7 @@ public class Book {
     private String author;
     private String genre;
     private boolean status;
+    public boolean getStatus(){
+        return status;
+    }
 }
