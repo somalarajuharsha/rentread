@@ -24,6 +24,7 @@ public class Book {
     private String author;
     private String genre;
     private boolean status;
+    
     public boolean getStatus(){
         return status;
     }

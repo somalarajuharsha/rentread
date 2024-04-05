@@ -42,4 +42,15 @@ public class BookService {
         bookRepository.deleteById(Long.parseLong(bookId));
         return "Deleted Successfully";
     }
+
+    public Book updateBook(String bookId,BookRequest bookRequest){
+        Optional<Book> checkBook=bookRepository.findById(Long.parseLong(bookId));
+        Book book=checkBook.orElse(null);
+        if(book==null)
+        throw new BookExistException("bookId Not found!");
+        book.setAuthor(bookRequest.getAuthor());
+        book.setGenre(bookRequest.getGenre());
+        book.setTitle(bookRequest.getTitle());
+        bookRepository.save(book);
+        return book;    }
 }

@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.crio.rentread.exception.EmailExistException;
+import com.crio.rentread.exchange.LoginRequest;
 import com.crio.rentread.exchange.UserRequest;
 import com.crio.rentread.exchange.UserResponse;
 import com.crio.rentread.model.Book;
@@ -67,8 +68,8 @@ public class AuthUserService {
         return books;
     }
 
-    public String login(User user){
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
+    public String login(LoginRequest loginRequest){
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
         return "login sucess";
     }
 }

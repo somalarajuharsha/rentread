@@ -37,9 +37,10 @@ public class BookController {
     public ResponseEntity<Book> postBook(@RequestBody BookRequest bookRequest) {
         return new ResponseEntity<>(bookService.addBook(bookRequest),HttpStatus.CREATED);
     }
+
     @PutMapping("/books/{bookId}")
     public ResponseEntity<Book> putMethodName(@PathVariable(value = "bookId") String bookId, @RequestBody BookRequest bookRequest) {
-        return null;
+        return new ResponseEntity<>(bookService.updateBook(bookId, bookRequest),HttpStatus.OK);
     }
 
     @DeleteMapping("/books/{bookId}")

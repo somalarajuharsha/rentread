@@ -49,7 +49,7 @@ public class SecurityConfig {
         httpSecurity.authenticationProvider(authenticationProvider());
 
         httpSecurity.authorizeHttpRequests(config->config
-        .requestMatchers("/","/login","/register")
+        .requestMatchers("/","/api/login","/api/register")
         .permitAll()
         .requestMatchers(HttpMethod.POST,"/api/books")
         .hasAuthority(Role.ADMIN.name())

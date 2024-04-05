@@ -2,11 +2,14 @@ package com.crio.rentread.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.crio.rentread.exchange.LoginRequest;
 import com.crio.rentread.exchange.UserRequest;
 import com.crio.rentread.exchange.UserResponse;
 import com.crio.rentread.service.AuthUserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,9 +38,8 @@ public class RentreadController {
         return ResponseEntity.ok(response);
     }
     @PostMapping("/login")
-    public ResponseEntity<String> postLog(@RequestBody UserRequest userRequest) {
-
-        return ResponseEntity.ok("success");
+    public ResponseEntity<String> postLog(@RequestBody LoginRequest loginRequest) {
+        return new ResponseEntity<>(authUserService.login(loginRequest),HttpStatus.OK);
     }
     @GetMapping("/user")
     public String getUser() {
